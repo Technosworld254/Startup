@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const projects = [
+	{
+		sector: 'Restaurant',
+		slug: 'websites',
+		title: 'Online presence that fills tables',
+		description: 'A popular Kirinyaga restaurant had a loyal following but no way for new customers to find them. We built a mobile-first website with a searchable menu, table reservation form, and Google Business profile. Within a month they were appearing in local searches and taking advance bookings every evening.',
+		tags: ['Website', 'Booking forms', 'Local SEO', 'Mobile-first'],
+		icon: 'M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z',
+	},
+	{
+		sector: 'SACCO',
+		slug: 'software',
+		title: 'Member management for 600+ members',
+		description: 'A cooperative society was running loan applications and balance enquiries from a shared WhatsApp group and paper ledgers. We built a complete member management system: digital records, loan tracking, M-Pesa repayment integration, and automated monthly statements sent directly to members.',
+		tags: ['Custom software', 'M-Pesa integration', 'Member portal', 'Auto-reports'],
+		icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+	},
+	{
+		sector: 'Clinic',
+		slug: 'ai-tools',
+		title: 'Smart scheduling for a busy outpatient clinic',
+		description: 'Double-bookings and missed appointments were costing the clinic hours every week. An AI-powered scheduling system now manages bookings, sends automated Safaricom SMS reminders 24 hours in advance, and frees the reception desk to focus on patients already in the building — not the phone.',
+		tags: ['AI scheduling', 'SMS automation', 'Patient records', 'No-show reduction'],
+		icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01',
+	},
+	{
+		sector: 'Sports club',
+		slug: 'digital-infrastructure',
+		title: 'Online membership and events platform',
+		description: "A sports and social club's website crashed every time they posted about a big event. We migrated to resilient cloud hosting, added SSL, automated daily backups, and built a member portal for event bookings and subscription payments via M-Pesa. The site now handles the traffic spikes without breaking a sweat.",
+		tags: ['Cloud hosting', 'M-Pesa payments', 'SSL security', 'Daily backups'],
+		icon: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z',
+	},
+	{
+		sector: 'Hardware shop',
+		slug: 'branding-marketing',
+		title: 'Brand identity for a growing local business',
+		description: "A hardware shop in Kutus had been using a logo photographed from a phone since it opened. We designed a full brand identity — logo, colours, business cards, signage, and flyers — giving the business the visual credibility to compete for larger contracts and county government tenders. First impression now matches the quality of service.",
+		tags: ['Logo design', 'Brand identity', 'Print materials', 'Signage'],
+		icon: 'M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01',
+	},
+];
+---
+
+<Layout
+	title="Portfolio — Technosworld"
+	description="Real work, real results. See what Technosworld builds for restaurants, SACCOs, clinics, clubs and SMEs across Kenya."
+>
+	<!-- Breadcrumb -->
+	<div class="border-b border-card-border bg-surface">
+		<div class="mx-auto flex max-w-7xl items-center gap-2 px-6 py-3 text-sm md:px-10">
+			<a href="/" class="text-muted transition-colors hover:text-navy">Home</a>
+			<span class="text-silver">/</span>
+			<span class="text-muted">Media</span>
+			<span class="text-silver">/</span>
+			<span class="font-medium text-navy">Portfolio</span>
+		</div>
+	</div>
+
+	<!-- Hero -->
+	<section class="bg-surface">
+		<div class="mx-auto max-w-4xl px-6 py-20 text-center md:px-10">
+			<div class="reveal">
+				<p class="eyebrow mb-4">Our work</p>
+				<h1 class="text-4xl font-bold text-navy md:text-5xl">What we build for businesses like yours</h1>
+				<p class="mx-auto mt-6 max-w-2xl text-lg text-charcoal">
+					Five types of business, five kinds of problems, five ways Technosworld helped. Real work, real results — from restaurants and SACCOs to clinics and hardware shops across Kirinyaga County.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Projects -->
+	<section class="bg-white">
+		<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+			<div class="flex flex-col gap-16">
+				{projects.map((project, i) => (
+					<div class={`reveal flex flex-col items-start gap-10 md:gap-16 md:flex-row ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+						<!-- Icon side -->
+						<div class="flex w-full items-center justify-center md:w-2/5">
+							<div class="flex h-56 w-full max-w-xs items-center justify-center rounded-2xl border border-card-border bg-surface">
+								<svg class="h-24 w-24 text-navy/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+									<path d={project.icon} />
+								</svg>
+							</div>
+						</div>
+						<!-- Content side -->
+						<div class="w-full md:w-3/5">
+							<p class="eyebrow mb-3">{project.sector}</p>
+							<h2 class="text-2xl font-bold text-navy md:text-3xl">{project.title}</h2>
+							<p class="mt-4 text-lg text-charcoal">{project.description}</p>
+							<div class="mt-6 flex flex-wrap gap-2">
+								{project.tags.map((tag) => (
+									<span class="rounded-full border border-card-border px-3 py-1 text-xs font-medium text-muted">{tag}</span>
+								))}
+							</div>
+							<a
+								href={`/services/${project.slug}`}
+								class="mt-6 inline-flex items-center gap-1.5 rounded-full border border-navy px-4 py-1.5 text-sm font-bold text-navy transition-all duration-200 hover:bg-navy hover:text-white"
+							>
+								See how we build this
+								<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+								</svg>
+							</a>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="bg-navy">
+		<div class="mx-auto max-w-4xl px-6 py-20 text-center md:px-10">
+			<div class="reveal">
+				<p class="eyebrow mb-4 text-white/60">Ready to start?</p>
+				<h2 class="text-3xl font-bold text-white md:text-4xl">Ready to be our next case study?</h2>
+				<p class="mx-auto mt-6 max-w-xl text-white/70">
+					Tell us about your business. We'll tell you honestly whether we can help and what it would cost.
+				</p>
+				<div class="mt-8 flex flex-wrap justify-center gap-4">
+					<a href="/contact" class="btn-primary bg-white text-navy hover:bg-surface">Start the conversation</a>
+					<a href="/#services" class="btn-outline border-white text-white hover:bg-white hover:text-navy">See all services</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

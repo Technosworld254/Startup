@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const articles = [
+	{
+		category: 'Websites',
+		title: 'Why your Kirinyaga restaurant needs more than a Facebook page in 2025',
+		excerpt: "Facebook reach for business pages has dropped by over 70% in the last five years. If your restaurant's only digital presence is a page you post to twice a week, you are invisible to the majority of people searching for places to eat in your area. Here is what the data shows — and what you can do about it.",
+		readTime: '4 min read',
+		slug: 'websites',
+		content: [
+			"When a customer in Kirinyaga County is looking for a restaurant for a birthday dinner or a business lunch, the first thing they do is open Google and search. What they find in the next ten seconds determines where they spend their money that evening.",
+			"If your restaurant has no website, you do not appear. If you have a Facebook page, you might appear — but as an unformatted result with a blurry profile photo and no way to see a menu or make a reservation. Your competitor two streets away, who invested in a basic professional website two years ago, appears at the top of the search with their menu, opening hours, photos, and a phone number that links directly to WhatsApp.",
+			"They get the call. You get nothing — and you never know the call existed.",
+			"The good news: a professional, mobile-first website for a restaurant in Kenya does not have to cost a fortune or take months to build. The right approach gets you found on Google, shows your menu clearly on any phone, and lets customers book a table or send a WhatsApp message in under 30 seconds.",
+			"At Technosworld, we build restaurant websites that load in under two seconds on Safaricom data, work without an app download, and update easily when your menu or hours change. We have seen what happens when a restaurant in Kirinyaga goes from no website to a working one: the first month always brings customers who say they found the place on Google — customers who had never walked past the physical location."
+		],
+	},
+	{
+		category: 'Management software',
+		title: 'How SACCOs across Kenya are cutting admin time with simple digital systems',
+		excerpt: 'The average SACCO secretary spends 2–3 hours every morning answering balance and loan enquiries by phone or in person. Across 600 members, that is dozens of calls for information that could be delivered automatically. We have seen what happens when that time is freed up — and the difference it makes.',
+		readTime: '5 min read',
+		slug: 'software',
+		content: [
+			"Picture a Monday morning at a SACCO office in Kirinyaga County. The phones start ringing at 8am. Most of the calls are the same: 'What is my current balance?' 'When is my loan due?' 'Has my contribution been received?' By 10am, the secretary has spent two hours on the phone and has not yet processed a single new application.",
+			"This is not a management problem. It is a systems problem. The information members are calling to request already exists — it is in the ledger, or the spreadsheet, or the WhatsApp group. It just is not in a format that members can access themselves.",
+			"A digital member management system changes this completely. When a member wants their balance, they send a message — or log into a simple portal — and get the answer in seconds. The phone stops ringing for information requests. The secretary's morning is now free to process new loans, check credit assessments, and handle the work that actually requires human judgment.",
+			"SACCOs we have worked with report cutting admin time by more than 60% in the first month after switching to a digital system. The treasurer has accurate end-of-month reports generated automatically. The board has real-time data for their quarterly meetings. And members — used to calling and waiting — are surprised and satisfied to get instant, accurate information.",
+			"The system does not need to be complicated. The right tool is the simplest one that solves the actual problem: giving members access to their own information without needing to come to the office or tie up the secretary for ten minutes per call."
+		],
+	},
+	{
+		category: 'Business software',
+		title: '5 signs your business is ready for custom management software',
+		excerpt: 'Not every business needs custom software. Sometimes a good spreadsheet template is the right answer. But there are clear signals that a business has outgrown its paper systems. If three or more of these describe your operation, it is time to have a serious conversation.',
+		readTime: '3 min read',
+		slug: 'software',
+		content: [
+			"We talk to business owners in Kirinyaga County every week who are managing complex operations with tools built for much simpler ones. A spreadsheet designed for ten transactions is being used for ten thousand. A WhatsApp group created for quick updates has become the official record for three years of customer history.",
+			"The question is not whether digital management software is good — it clearly is. The question is whether your business is at the point where the investment makes sense. Here are five clear signals that it is.",
+			"1. You spend more than an hour every day on admin that feels like data entry. If you or your staff are copying information from one place to another — transcribing phone enquiries into notebooks, retyping sales figures into spreadsheets, manually updating stock counts — this is exactly what software should be doing instead.",
+			"2. You have had at least two 'where is that record?' moments this month. When customer information, member records, or transaction history lives in multiple places — a notebook here, a WhatsApp message there, a spreadsheet on one computer — the time spent looking for information is a direct cost to your business.",
+			"3. You cannot answer basic business questions without significant preparation. How many active members do you have? What was your busiest service day last month? Which stock item has the lowest margin? If these questions require a full morning to answer, you are managing by guesswork.",
+			"4. Two or more staff members work on the same records. Double-booking of appointments, conflicting stock counts, and duplicate member entries are all symptoms of the same problem: shared records without a shared system.",
+			"5. You are turning away growth because the admin cannot keep up. If you are hesitating to take on more members, more patients, or more orders because the paperwork burden would become unmanageable — the system is the ceiling on your growth."
+		],
+	},
+];
+---
+
+<Layout
+	title="Insights — Technosworld"
+	description="Practical articles about digital transformation for Kenyan businesses. Websites, software, AI tools — written for business owners, not developers."
+>
+	<!-- Breadcrumb -->
+	<div class="border-b border-card-border bg-surface">
+		<div class="mx-auto flex max-w-7xl items-center gap-2 px-6 py-3 text-sm md:px-10">
+			<a href="/" class="text-muted transition-colors hover:text-navy">Home</a>
+			<span class="text-silver">/</span>
+			<span class="text-muted">Media</span>
+			<span class="text-silver">/</span>
+			<span class="font-medium text-navy">Insights</span>
+		</div>
+	</div>
+
+	<!-- Hero -->
+	<section class="bg-surface">
+		<div class="mx-auto max-w-4xl px-6 py-20 text-center md:px-10">
+			<div class="reveal">
+				<p class="eyebrow mb-4">Insights & updates</p>
+				<h1 class="text-4xl font-bold text-navy md:text-5xl">Written for business owners, not developers</h1>
+				<p class="mx-auto mt-6 max-w-2xl text-lg text-charcoal">
+					Practical thinking on digital tools, technology decisions, and what works for businesses in Kenya — from the team at Technosworld.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Articles -->
+	<section class="bg-white">
+		<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+			<div class="flex flex-col gap-20">
+				{articles.map((article, i) => (
+					<article class={`reveal flex flex-col gap-10 md:flex-row md:gap-16 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+						<!-- Label side -->
+						<div class="w-full md:w-1/3">
+							<p class="eyebrow mb-3">{article.category}</p>
+							<h2 class="text-2xl font-bold text-navy">{article.title}</h2>
+							<p class="mt-3 text-sm text-muted">{article.readTime}</p>
+							<a
+								href={`/services/${article.slug}`}
+								class="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-navy-bright hover:text-navy"
+							>
+								See our {article.category.toLowerCase()} work
+								<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+								</svg>
+							</a>
+						</div>
+						<!-- Content side -->
+						<div class="w-full space-y-4 md:w-2/3">
+							{article.content.map((para, pi) => (
+								<p class={`text-charcoal ${pi === 0 ? 'text-lg font-medium' : ''}`}>{para}</p>
+							))}
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="bg-surface">
+		<div class="mx-auto max-w-4xl px-6 py-20 text-center md:px-10">
+			<div class="reveal">
+				<p class="eyebrow mb-4">Have a question?</p>
+				<h2 class="text-3xl font-bold text-navy md:text-4xl">Not sure what your business needs?</h2>
+				<p class="mx-auto mt-6 max-w-xl text-charcoal">
+					Tell us about your operation and the problems you are trying to solve. We will give you an honest answer about what technology would and wouldn't help — no sales pitch.
+				</p>
+				<div class="mt-8 flex flex-wrap justify-center gap-4">
+					<a href="/contact" class="btn-primary">Talk to us</a>
+					<a href="/portfolio" class="btn-outline">See our work</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

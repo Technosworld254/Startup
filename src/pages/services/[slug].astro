@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { services } from '../../data/services';
+import type { Service } from '../../data/services';
+
+export function getStaticPaths() {
+	return services.map((service) => ({
+		params: { slug: service.slug },
+		props: { service },
+	}));
+}
+
+interface Props {
+	service: Service;
+}
+
+const { service } = Astro.props;
+---
+
+<Layout
+	title={`${service.title} — Technosworld`}
+	description={service.subheadline}
+>
+	<!-- Breadcrumb -->
+	<div class="border-b border-card-border bg-surface">
+		<div class="mx-auto flex max-w-7xl items-center gap-2 px-6 py-3 text-sm md:px-10">
+			<a href="/" class="text-muted transition-colors hover:text-navy">Home</a>
+			<span class="text-silver">/</span>
+			<a href="/#services" class="text-muted transition-colors hover:text-navy">Services</a>
+			<span class="text-silver">/</span>
+			<span class="font-medium text-navy">{service.title}</span>
+		</div>
+	</div>
+
+	<!-- Hero -->
+	<section class="relative flex min-h-[60vh] items-center overflow-hidden bg-navy">
+		<img
+			src={service.heroImage}
+			alt={service.heroImageAlt}
+			class="absolute inset-0 h-full w-full object-cover object-center"
+		/>
+		<div class="absolute inset-0 bg-navy/65 mix-blend-multiply"></div>
+
+		<div class="reveal relative z-10 mx-auto max-w-4xl px-6 py-24 text-center md:px-10">
+			<p class="eyebrow mb-4 text-white/70">{service.tagline}</p>
+			<h1 class="text-3xl font-bold leading-tight text-white md:text-5xl">
+				{service.headline}
+			</h1>
+			<p class="mx-auto mt-6 max-w-2xl text-lg text-white/80">
+				{service.subheadline}
+			</p>
+			<div class="mt-8 flex flex-wrap justify-center gap-4">
+				<a href="/#cta" class="btn-primary">Start a project</a>
+				<a href="/#services" class="btn-outline border-white bg-transparent text-white hover:bg-white hover:text-navy">See all services</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Pain Points -->
+	<section class="bg-white">
+		<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+			<div class="reveal mx-auto max-w-3xl text-center">
+				<p class="eyebrow mb-4">The challenge</p>
+				<h2 class="text-3xl font-bold text-navy md:text-4xl">Problems we solve</h2>
+				<p class="mt-4 text-charcoal">
+					We built these services because we kept hearing the same frustrations from businesses across Kirinyaga County.
+				</p>
+			</div>
+
+			<div class="mt-12 grid gap-6 sm:grid-cols-2">
+				{service.painPoints.map((point) => (
+					<div class="card reveal">
+						<div class="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-surface">
+							<svg class="h-5 w-5 text-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+							</svg>
+						</div>
+						<h3 class="text-base font-bold text-navy">{point.problem}</h3>
+						<p class="mt-3 text-sm text-charcoal">{point.solution}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- How It Works -->
+	<section class="bg-surface">
+		<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+			<div class="reveal mx-auto max-w-3xl text-center">
+				<p class="eyebrow mb-4">How it works</p>
+				<h2 class="text-3xl font-bold text-navy md:text-4xl">Simple, clear steps</h2>
+			</div>
+
+			<div class="mt-12 grid gap-8 md:grid-cols-3">
+				{service.steps.map((step) => (
+					<div class="reveal flex flex-col">
+						<span class="mb-4 text-5xl font-bold text-navy/10">{step.number}</span>
+						<h3 class="text-lg font-bold text-navy">{step.title}</h3>
+						<p class="mt-3 text-charcoal">{step.description}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- Features -->
+	<section class="bg-white">
+		<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+			<div class="reveal mx-auto max-w-3xl text-center">
+				<p class="eyebrow mb-4">What's included</p>
+				<h2 class="text-3xl font-bold text-navy md:text-4xl">Everything you need</h2>
+			</div>
+
+			<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+				{service.features.map((feature) => (
+					<div class="card reveal flex flex-col items-start">
+						<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-surface">
+							<svg class="h-6 w-6 text-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d={feature.icon} />
+							</svg>
+						</div>
+						<h3 class="text-base font-bold text-navy">{feature.title}</h3>
+						<p class="mt-2 text-sm text-charcoal">{feature.description}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- Testimonial -->
+	<section class="bg-surface">
+		<div class="mx-auto max-w-3xl px-6 py-20 text-center md:px-10 md:py-28">
+			<div class="reveal">
+				<svg class="mx-auto mb-6 h-10 w-10 text-silver" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M9.5 6C6.46 6 4 8.46 4 11.5S6.46 17 9.5 17c.36 0 .7-.04 1.04-.1C9.96 18.7 8.4 20 6.5 20v2c3.31 0 6-2.69 6-6v-.5C12.5 12.07 11.43 11 10 11c-.62 0-1.2.2-1.66.55C8.13 9.42 8.69 8 9.5 8V6zm9 0c-3.04 0-5.5 2.46-5.5 5.5S15.46 17 18.5 17c.36 0 .7-.04 1.04-.1-.58 1.8-2.14 3.1-4.04 3.1v2c3.31 0 6-2.69 6-6v-.5c0-1.43-1.07-2.5-2.5-2.5-.62 0-1.2.2-1.66.55C17.13 9.42 17.69 8 18.5 8V6z" />
+				</svg>
+				<p class="text-xl font-medium leading-relaxed text-charcoal md:text-2xl">
+					&ldquo;{service.testimonial.quote}&rdquo;
+				</p>
+				<div class="mt-8 flex items-center justify-center gap-3">
+					<div class="flex h-10 w-10 items-center justify-center rounded-full bg-navy text-sm font-bold text-white">
+						{service.testimonial.name.charAt(0)}
+					</div>
+					<div class="text-left">
+						<p class="text-sm font-bold text-navy">{service.testimonial.name}</p>
+						<p class="text-xs text-muted">{service.testimonial.role}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Band -->
+	<section class="bg-navy">
+		<div class="mx-auto max-w-4xl px-6 py-20 text-center md:px-10">
+			<div class="reveal">
+				<p class="eyebrow mb-4 text-white/60">Ready to start?</p>
+				<h2 class="text-3xl font-bold text-white md:text-4xl">{service.ctaText}</h2>
+				<p class="mx-auto mt-6 max-w-xl text-white/70">
+					Based in Kutus, Kirinyaga County — serving businesses across Kenya and East Africa.
+					No commitment required for the first call.
+				</p>
+				<div class="mt-8 flex flex-wrap justify-center gap-4">
+					<a href="mailto:hello@technosworld.com" class="btn-primary bg-white text-navy hover:bg-surface">Email us directly</a>
+					<a href="/#services" class="btn-outline border-white text-white hover:bg-white hover:text-navy">See all services</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

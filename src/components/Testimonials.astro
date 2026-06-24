@@ -1,0 +1,145 @@
+---
+const testimonials = [
+	{
+		sector: 'Restaurants & cafes',
+		quote:
+			'Our online menu and booking page now stay full most evenings. Customers say it\'s the easiest way to reach us — and it makes us look like a much bigger operation than we are.',
+		name: 'Restaurant Owner',
+		role: 'Kirinyaga County',
+	},
+	{
+		sector: 'SACCOs',
+		quote:
+			'Members can now check their balances and apply for loans without coming into the office. It has cut our front-desk workload significantly and members trust the system.',
+		name: 'SACCO Official',
+		role: 'Central Kenya',
+	},
+	{
+		sector: 'Hospitals & clinics',
+		quote:
+			'Booking appointments and managing patient records used to be all paper. The new system is simple enough for our whole team to use from day one.',
+		name: 'Clinic Administrator',
+		role: 'Kirinyaga County',
+	},
+	{
+		sector: 'Clubs & social venues',
+		quote:
+			'Our members can now see events and pay for memberships online. It has made the club feel a lot more modern, and saved our committee a lot of admin time.',
+		name: 'Club Manager',
+		role: 'Kirinyaga County',
+	},
+];
+---
+
+<section id="testimonials" class="overflow-hidden bg-surface">
+	<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+		<div class="reveal mx-auto max-w-3xl text-center">
+			<p class="eyebrow mb-4">What clients say</p>
+			<h2 class="text-3xl font-bold text-navy md:text-4xl">Trusted by businesses across sectors</h2>
+		</div>
+
+		<div class="reveal relative mt-12">
+			<div id="testimonial-track" class="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+				{testimonials.map((t) => (
+					<div class="card relative w-[85%] shrink-0 snap-start overflow-hidden md:w-[46%] lg:w-[31%]">
+						<svg class="pointer-events-none absolute -right-2 -top-2 h-20 w-20 text-silver/20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+							<path d="M9.5 6C6.46 6 4 8.46 4 11.5S6.46 17 9.5 17c.36 0 .7-.04 1.04-.1C9.96 18.7 8.4 20 6.5 20v2c3.31 0 6-2.69 6-6v-.5C12.5 12.07 11.43 11 10 11c-.62 0-1.2.2-1.66.55C8.13 9.42 8.69 8 9.5 8V6zm9 0c-3.04 0-5.5 2.46-5.5 5.5S15.46 17 18.5 17c.36 0 .7-.04 1.04-.1-.58 1.8-2.14 3.1-4.04 3.1v2c3.31 0 6-2.69 6-6v-.5c0-1.43-1.07-2.5-2.5-2.5-.62 0-1.2.2-1.66.55C17.13 9.42 17.69 8 18.5 8V6z" />
+						</svg>
+						<p class="eyebrow relative mb-4">{t.sector}</p>
+						<p class="relative text-lg text-charcoal">{t.quote}</p>
+						<div class="relative mt-6 flex items-center gap-3">
+							<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-bold text-white">
+								{t.name.charAt(0)}
+							</div>
+							<div class="text-left">
+								<p class="text-sm font-bold text-navy">{t.name}</p>
+								<p class="text-xs text-muted">{t.role}</p>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+
+			<div class="mt-8 flex items-center justify-center gap-6">
+				<button id="testimonial-prev" aria-label="Previous testimonial" class="flex h-10 w-10 items-center justify-center rounded-full border border-card-border text-navy transition-colors hover:border-navy">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+					</svg>
+				</button>
+
+				<div id="testimonial-dots" class="flex gap-2">
+					{testimonials.map((_, i) => (
+						<button aria-label={`Go to testimonial ${i + 1}`} data-index={i} class="testimonial-dot h-2 w-2 rounded-full bg-silver transition-colors"></button>
+					))}
+				</div>
+
+				<button id="testimonial-next" aria-label="Next testimonial" class="flex h-10 w-10 items-center justify-center rounded-full border border-card-border text-navy transition-colors hover:border-navy">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+					</svg>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	const track = document.getElementById('testimonial-track') as HTMLElement | null;
+	const dots = document.querySelectorAll<HTMLButtonElement>('.testimonial-dot');
+	const prev = document.getElementById('testimonial-prev');
+	const next = document.getElementById('testimonial-next');
+	const total = dots.length;
+
+	function cardWidth() {
+		const card = track?.children[0] as HTMLElement | undefined;
+		if (!card || !track) return 0;
+		const gap = parseFloat(getComputedStyle(track).gap || '0');
+		return card.offsetWidth + gap;
+	}
+
+	function scrollToIndex(index: number) {
+		if (!track) return;
+		track.scrollTo({ left: cardWidth() * index, behavior: 'smooth' });
+	}
+
+	function currentIndex() {
+		if (!track) return 0;
+		const width = cardWidth();
+		return width ? Math.round(track.scrollLeft / width) : 0;
+	}
+
+	function updateDots() {
+		const index = currentIndex();
+		dots.forEach((dot, i) => {
+			dot.classList.toggle('bg-navy', i === index);
+			dot.classList.toggle('bg-silver', i !== index);
+		});
+	}
+
+	prev?.addEventListener('click', () => {
+		scrollToIndex(Math.max(0, currentIndex() - 1));
+	});
+
+	next?.addEventListener('click', () => {
+		scrollToIndex(Math.min(total - 1, currentIndex() + 1));
+	});
+
+	dots.forEach((dot, i) => {
+		dot.addEventListener('click', () => scrollToIndex(i));
+	});
+
+	track?.addEventListener('scroll', () => updateDots(), { passive: true });
+
+	let autoplay = setInterval(() => {
+		scrollToIndex((currentIndex() + 1) % total);
+	}, 6000);
+
+	track?.addEventListener('mouseenter', () => clearInterval(autoplay));
+	track?.addEventListener('mouseleave', () => {
+		autoplay = setInterval(() => {
+			scrollToIndex((currentIndex() + 1) % total);
+		}, 6000);
+	});
+
+	updateDots();
+</script>

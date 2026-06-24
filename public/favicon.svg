@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Navy rounded square background -->
+  <rect width="128" height="128" rx="24" fill="#1B2D6B"/>
+
+  <!-- White helmet/visor -->
+  <circle cx="64" cy="65" r="46" fill="#FFFFFF"/>
+
+  <!-- Navy face panel -->
+  <circle cx="64" cy="70" r="36" fill="#1B2D6B"/>
+
+  <!-- Teal side ears -->
+  <circle cx="18" cy="65" r="8" fill="#1EB8C8"/>
+  <circle cx="110" cy="65" r="8" fill="#1EB8C8"/>
+
+  <!-- Left eye — teal glow outer -->
+  <circle cx="50" cy="64" r="12" fill="#1EB8C8"/>
+  <!-- Left eye — bright inner -->
+  <circle cx="50" cy="64" r="7" fill="#5EDDEA"/>
+  <!-- Left eye — white highlight -->
+  <circle cx="47" cy="61" r="3" fill="#FFFFFF" opacity="0.85"/>
+
+  <!-- Right eye — teal glow outer -->
+  <circle cx="78" cy="64" r="12" fill="#1EB8C8"/>
+  <!-- Right eye — bright inner -->
+  <circle cx="78" cy="64" r="7" fill="#5EDDEA"/>
+  <!-- Right eye — white highlight -->
+  <circle cx="75" cy="61" r="3" fill="#FFFFFF" opacity="0.85"/>
+
+  <!-- Smile -->
+  <path d="M48 86 Q64 100 80 86" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <!-- Antenna stick -->
+  <rect x="61" y="13" width="6" height="22" rx="3" fill="#FFFFFF"/>
+
+  <!-- Antenna ball — blue like the logo -->
+  <circle cx="64" cy="10" r="8" fill="#2441A0"/>
+  <circle cx="64" cy="10" r="4" fill="#7AC4E0"/>
+</svg>

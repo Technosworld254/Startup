@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+
+  /* lock Tailwind's color palette to ONLY the Technosworld brand colors */
+  --color-*: initial;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-navy: #1B2D6B;
+  --color-navy-bright: #2441A0;
+  --color-silver: #A8B4C8;
+  --color-surface: #F2F4F7;
+  --color-charcoal: #2C3E50;
+  --color-muted: #8A96A3;
+  --color-footer-navy: #0D1A3A;
+  --color-card-border: #C8D0DA;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-[7px] px-[28px] py-[13px] text-[15px] font-medium transition-transform duration-150 active:scale-[0.98] bg-navy text-white hover:bg-navy-bright;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-[7px] px-[28px] py-[13px] text-[15px] font-medium transition-transform duration-150 active:scale-[0.98] border border-navy text-navy hover:bg-navy hover:text-white;
+  }
+  .card {
+    @apply rounded-xl border border-card-border bg-white p-8 transition-all duration-200 hover:-translate-y-[3px] hover:border-2 hover:border-navy;
+  }
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.2em] text-navy-bright;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 700ms ease-out, transform 700ms ease-out;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .animate-marquee {
+    animation: marquee 32s linear infinite;
+  }
+  .pause-on-hover:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}

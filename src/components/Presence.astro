@@ -1,0 +1,32 @@
+---
+const regions = [
+	{ name: 'Kirinyaga County', status: 'Home base — Kutus', active: true },
+	{ name: 'Central Kenya', status: 'Currently serving', active: true },
+	{ name: 'Nairobi & beyond', status: 'Expanding to', active: false },
+	{ name: 'East Africa', status: 'Long-term ambition', active: false },
+];
+---
+
+<section id="presence" class="bg-white">
+	<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+		<div class="reveal mx-auto max-w-3xl text-center">
+			<p class="eyebrow mb-4">Where we work</p>
+			<h2 class="text-3xl font-bold text-navy md:text-4xl">Rooted in Kirinyaga, building toward East Africa</h2>
+			<p class="mt-6 text-lg text-charcoal">
+				Technosworld is based in Kutus, Kirinyaga County — close to the businesses we
+				serve. As we grow, our goal is to bring the same quality of digital tools to SMEs,
+				SACCOs and institutions across Kenya and the wider East African region.
+			</p>
+		</div>
+
+		<div class="reveal mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+			{regions.map((region) => (
+				<div class="card text-center">
+					<div class={`mx-auto mb-4 h-2 w-12 rounded-full ${region.active ? 'bg-navy-bright' : 'bg-silver'}`}></div>
+					<h3 class="text-lg font-bold text-navy">{region.name}</h3>
+					<p class="mt-2 text-sm text-muted">{region.status}</p>
+				</div>
+			))}
+		</div>
+	</div>
+</section>

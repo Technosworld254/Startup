@@ -1,0 +1,206 @@
+---
+import RibbonMotif from './RibbonMotif.astro';
+---
+
+<section id="top" class="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-surface">
+	<!-- Background sector photography, dimmed and navy-tinted so the 3D scene stays the focus -->
+	<div class="absolute inset-0 z-0 grid grid-cols-3 opacity-50">
+		<img src="/images/hero/upepo-restaurant.jpg" alt="" class="h-full w-full object-cover" />
+		<img src="/images/hero/Hundreds-Turn-up-for-Corrective-Surgeries-at-the-Makueni-County-Referral-Hospital.jpg" alt="" class="h-full w-full object-cover" />
+		<img src="/images/hero/sacco.jpg" alt="" class="h-full w-full object-cover" />
+		<div class="absolute inset-0 bg-navy/70 mix-blend-multiply"></div>
+	</div>
+
+	<!-- Full screen 3D Canvas Background -->
+	<div class="absolute inset-0 z-[1]">
+		<canvas id="hero-3d-canvas" class="h-full w-full outline-none"></canvas>
+	</div>
+
+	<!-- Centered Foreground Text -->
+	<div class="reveal relative z-10 mx-auto max-w-4xl px-6 py-20 text-center md:px-10">
+		<p class="eyebrow mx-auto mb-4 bg-surface px-4 py-1.5 rounded-full inline-block border border-card-border">Websites · Software · AI · Digital Infrastructure</p>
+		<h1 class="text-4xl font-bold leading-tight text-black md:text-6xl">
+			Digital systems built for businesses across Kenya — and beyond.
+		</h1>
+		<p class="mx-auto mt-6 max-w-2xl text-lg text-black">
+			Technosworld designs and builds websites, software, AI tools and digital
+			infrastructure for restaurants, SACCOs, hospitals, clubs and SMEs — starting in
+			Kirinyaga County, with our sights set on East Africa.
+		</p>
+		<div class="mt-8 flex flex-wrap justify-center gap-4">
+			<a href="#cta" class="btn-primary">Start a project</a>
+			<a href="#services" class="btn-outline bg-white text-black">See our services</a>
+		</div>
+		<p class="mt-6 inline-block rounded-full bg-white px-4 py-1.5 text-sm text-muted">
+			Already running: TechpointPOS, our SaaS point-of-sale platform —
+			<a href="https://www.techpointpos.co.ke/" target="_blank" rel="noopener noreferrer" class="font-bold text-navy-bright hover:text-navy">visit techpointpos.co.ke ↗</a>
+		</p>
+	</div>
+</section>
+
+<script>
+	import * as THREE from 'three';
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const canvas = document.getElementById('hero-3d-canvas') as HTMLCanvasElement;
+		if (!canvas || !canvas.parentElement) return;
+
+		const container = canvas.parentElement;
+
+		// 1. Scene setup
+		const scene = new THREE.Scene();
+		
+		// 2. Camera setup
+		const aspect = container.clientWidth / container.clientHeight;
+		const camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
+		// Position camera slightly above and looking slightly down
+		camera.position.set(0, 2, 12);
+		camera.lookAt(0, 0, 0);
+
+		// Wide screens need objects spread further apart to fill the width
+		const spread = Math.max(1, aspect / 1.6);
+
+		// 3. Renderer setup
+		const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+		renderer.setSize(container.clientWidth, container.clientHeight);
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+		// 4. Materials (using Technosworld colors)
+		const screenMaterial = new THREE.MeshPhysicalMaterial({
+			color: 0x2441a0, // Bright navy
+			metalness: 0.5,
+			roughness: 0.1,
+			transmission: 0.6,
+			thickness: 1.0,
+			clearcoat: 1.0,
+			clearcoatRoughness: 0.1,
+			emissive: 0x2441a0,
+			emissiveIntensity: 0.5
+		});
+
+		const chassisMaterial = new THREE.MeshStandardMaterial({
+			color: 0xf2f4f7, // Light grey surface
+			roughness: 0.3,
+			metalness: 0.6,
+		});
+
+		const nodeMaterial = new THREE.MeshStandardMaterial({
+			color: 0xa8b4c8, // Silver
+			metalness: 0.9,
+			roughness: 0.1,
+		});
+
+		// 5. Geometries & Meshes
+		const items: { mesh: THREE.Group | THREE.Mesh; rotateSpeedX: number; rotateSpeedY: number; floatSpeed: number; initialY: number; offset: number }[] = [];
+
+		// Abstract Laptop Shape
+		const laptopGroup = new THREE.Group();
+		
+		const baseGeo = new THREE.BoxGeometry(3, 0.1, 2);
+		const base = new THREE.Mesh(baseGeo, chassisMaterial);
+		laptopGroup.add(base);
+
+		const screenGeo = new THREE.BoxGeometry(3, 2, 0.1);
+		const screen = new THREE.Mesh(screenGeo, screenMaterial);
+		screen.position.set(0, 1, -0.95);
+		screen.rotation.x = -0.2; // tilted back slightly
+		laptopGroup.add(screen);
+
+		laptopGroup.position.set(-6 * spread, 1, -2);
+		scene.add(laptopGroup);
+		items.push({ mesh: laptopGroup, rotateSpeedX: 0.002, rotateSpeedY: 0.01, floatSpeed: 2.0, initialY: 1, offset: 0 });
+
+		// Abstract Server Rack Shape
+		const serverGroup = new THREE.Group();
+		const serverGeo = new THREE.BoxGeometry(1.5, 4, 1.5);
+		const server = new THREE.Mesh(serverGeo, chassisMaterial);
+		serverGroup.add(server);
+		
+		// Server glowing lights
+		const lightGeo = new THREE.BoxGeometry(1.6, 0.1, 1.6);
+		const sLight1 = new THREE.Mesh(lightGeo, screenMaterial);
+		sLight1.position.y = 1;
+		serverGroup.add(sLight1);
+		const sLight2 = new THREE.Mesh(lightGeo, screenMaterial);
+		sLight2.position.y = 0;
+		serverGroup.add(sLight2);
+
+		serverGroup.position.set(7 * spread, 0, -5);
+		scene.add(serverGroup);
+		items.push({ mesh: serverGroup, rotateSpeedX: 0.001, rotateSpeedY: -0.005, floatSpeed: 1.5, initialY: 0, offset: Math.PI });
+
+		// Floating Data Nodes / Gadgets
+		const nodeGeo = new THREE.OctahedronGeometry(0.5, 0);
+		for(let i = 0; i < 8; i++) {
+			const node = new THREE.Mesh(nodeGeo, nodeMaterial);
+			// Keep nodes off to the sides, clear of the centered hero text
+			const side = i % 2 === 0 ? -1 : 1;
+			node.position.set(
+				side * (6 + Math.random() * 4) * Math.max(spread, 1.3),
+				(Math.random() - 0.5) * 10,
+				(Math.random() - 0.5) * 10 - 2
+			);
+			scene.add(node);
+			items.push({ 
+				mesh: node, 
+				rotateSpeedX: (Math.random() - 0.5) * 0.05, 
+				rotateSpeedY: (Math.random() - 0.5) * 0.05, 
+				floatSpeed: 3.0 + Math.random(), 
+				initialY: node.position.y, 
+				offset: Math.random() * Math.PI * 2 
+			});
+		}
+
+		// Background Grid
+		const gridHelper = new THREE.GridHelper(40 * spread, 40, 0xa8b4c8, 0xf2f4f7);
+		gridHelper.position.y = -4;
+		scene.add(gridHelper);
+
+		// 6. Lighting
+		const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+		scene.add(ambientLight);
+
+		const mainLight = new THREE.DirectionalLight(0xffffff, 1.5);
+		mainLight.position.set(5, 10, 7);
+		scene.add(mainLight);
+
+		const fillLight = new THREE.DirectionalLight(0x2441a0, 1.0); // Blue fill light
+		fillLight.position.set(-5, -2, -5);
+		scene.add(fillLight);
+
+		// 7. Animation Loop
+		const clock = new THREE.Clock();
+
+		function animate() {
+			requestAnimationFrame(animate);
+			const time = clock.getElapsedTime();
+
+			// Move Camera slowly to feel alive
+			camera.position.x = Math.sin(time * 0.1) * 2;
+			camera.position.y = 2 + Math.sin(time * 0.2) * 1;
+			camera.lookAt(0, 0, 0);
+
+			// Animate all items
+			items.forEach(item => {
+				item.mesh.rotation.x += item.rotateSpeedX;
+				item.mesh.rotation.y += item.rotateSpeedY;
+				item.mesh.position.y = item.initialY + Math.sin(time * item.floatSpeed + item.offset) * 0.3;
+			});
+
+			renderer.render(scene, camera);
+		}
+		
+		animate();
+
+		// 8. Handle Window Resize
+		window.addEventListener('resize', () => {
+			if (!container) return;
+			const width = container.clientWidth;
+			const height = container.clientHeight;
+			
+			renderer.setSize(width, height);
+			camera.aspect = width / height;
+			camera.updateProjectionMatrix();
+		});
+	});
+</script>

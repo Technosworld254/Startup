@@ -1,0 +1,97 @@
+---
+const services = [
+	{
+		slug: 'websites',
+		title: 'Websites & online presence',
+		description:
+			'Fast, professional websites that work on any phone — online menus and bookings for restaurants and clubs, service pages and appointment info for clinics, and member-facing portals for SACCOs.',
+		points: ['Mobile-first, fast-loading pages', 'Booking & contact forms', 'Built to your brand'],
+		image: '/images/services/websites.png',
+	},
+	{
+		slug: 'software',
+		title: 'Business & management software',
+		description:
+			'Custom systems that run the day-to-day — member management and loan tracking for SACCOs, appointment and records systems for hospitals and clinics, and ordering or inventory tools for restaurants.',
+		points: ['Member & patient records', 'Inventory & ordering tools', 'Built around how you work'],
+		image: '/images/services/business-software.png',
+	},
+	{
+		slug: 'ai-tools',
+		title: 'AI tools',
+		description:
+			'Practical AI that saves time — automated customer responses, smart booking assistants, and reporting tools that turn your business data into clear, useful insights.',
+		points: ['Automated customer support', 'Smart scheduling & reminders', 'Business insight reports'],
+		image: '/images/services/ai-tools.png',
+	},
+	{
+		slug: 'digital-infrastructure',
+		title: 'Digital infrastructure',
+		description:
+			'The foundation underneath it all — reliable hosting, secure systems for sensitive member and patient data, and infrastructure ready for how Kenyan businesses actually take payments.',
+		points: ['Secure hosting & data handling', 'Payments-ready infrastructure', 'Ongoing support & maintenance'],
+		image: '/images/services/digital-infrastructure.png',
+	},
+	{
+		slug: 'branding-marketing',
+		title: 'Branding, print & marketing',
+		description:
+			'Beyond the screen — logo and brand identity design, posters, flyers and other print materials, plus marketing support to help your business get noticed, and many more services as your needs grow.',
+		points: ['Logo & brand identity design', 'Posters, flyers & print materials', 'Business marketing support'],
+		image: '/images/services/branding-marketing.png',
+	},
+];
+
+const icons: Record<string, string> = {
+	globe: 'M12 21a9 9 0 100-18 9 9 0 000 18zM3.6 9h16.8M3.6 15h16.8M12 3a13.5 13.5 0 010 18M12 3a13.5 13.5 0 000 18',
+	layers: 'M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5',
+	spark: 'M12 2l1.8 5.4L19 9l-5.2 1.6L12 16l-1.8-5.4L5 9l5.2-1.6L12 2zM5 17l.9 2.6L8.5 20l-2.6.9L5 23.5l-.9-2.6L1.5 20l2.6-.9L5 17z',
+	grid: 'M4 4h7v7H4V4zM13 4h7v7h-7V4zM4 13h7v7H4v-7zM13 13h7v7h-7v-7z',
+};
+---
+
+<section id="services" class="bg-surface">
+	<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+		<div class="reveal mx-auto max-w-3xl text-center">
+			<p class="eyebrow mb-4">What we do</p>
+			<h2 class="text-3xl font-bold text-navy md:text-4xl">Services built for real businesses</h2>
+			<p class="mt-6 text-lg text-charcoal">
+				From a single restaurant in Kutus to a growing SACCO with thousands of members —
+				we build the digital tools that help you run, and grow, your business.
+			</p>
+		</div>
+
+		<div class="mt-16 flex flex-col gap-16">
+			{services.map((service, i) => (
+				<div class={`reveal flex flex-col items-center gap-10 md:gap-16 md:flex-row ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+					<div class="flex w-full items-center justify-center md:w-1/2">
+						<div class="relative w-full max-w-sm overflow-hidden rounded-2xl border border-card-border bg-white shadow-xl">
+							<img src={service.image} alt={service.title} class="w-full h-auto object-cover aspect-video" />
+						</div>
+					</div>
+					<div class="w-full md:w-1/2">
+						<h3 class="text-2xl font-bold text-navy">{service.title}</h3>
+						<p class="mt-4 text-charcoal">{service.description}</p>
+						<ul class="mt-6 space-y-3">
+							{service.points.map((point) => (
+								<li class="flex items-center gap-3 text-sm font-medium text-charcoal">
+									<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-navy-bright"></span>
+									{point}
+								</li>
+							))}
+						</ul>
+						<a
+							href={`/services/${service.slug}`}
+							class="mt-6 inline-flex items-center gap-1.5 rounded-full border border-navy px-4 py-1.5 text-sm font-bold text-navy transition-all duration-200 hover:bg-navy hover:text-white"
+						>
+							Learn more
+							<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+							</svg>
+						</a>
+					</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>

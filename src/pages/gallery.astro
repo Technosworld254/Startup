@@ -1,0 +1,299 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const slots = [
+	{ file: 'work-01.jpg', caption: 'Web design project — Restaurant, Kirinyaga'    },
+	{ file: 'work-02.jpg', caption: 'Business software — SACCO management system'   },
+	{ file: 'work-03.jpg', caption: 'Brand identity project — hardware business'    },
+	{ file: 'work-04.jpg', caption: 'Server infrastructure — cloud migration'       },
+	{ file: 'work-05.jpg', caption: 'AI tools implementation — SME automation'      },
+	{ file: 'work-06.jpg', caption: 'Marketing materials — client rollout'          },
+];
+---
+
+<Layout
+	title="Gallery — Technosworld"
+	description="A look at the work behind Technosworld — based in Kutus, Kirinyaga County."
+>
+	<!-- Breadcrumb -->
+	<div class="border-b border-card-border bg-surface">
+		<div class="mx-auto flex max-w-7xl items-center gap-2 px-6 py-3 text-sm md:px-10">
+			<a href="/" class="text-muted transition-colors hover:text-navy">Home</a>
+			<span class="text-silver">/</span>
+			<span class="text-muted">Media</span>
+			<span class="text-silver">/</span>
+			<span class="font-medium text-navy">Gallery</span>
+		</div>
+	</div>
+
+	<!-- Hero -->
+	<section class="relative flex h-64 items-end overflow-hidden md:h-80">
+		<img
+			src="/images/about/team-at-work.jpg"
+			alt="Technosworld gallery"
+			class="absolute inset-0 h-full w-full object-cover object-center"
+		/>
+		<div class="absolute inset-0 bg-navy/70"></div>
+		<div class="relative z-10 w-full px-6 pb-10 text-center md:px-10">
+			<p class="eyebrow mb-3 text-white/60">Our work</p>
+			<h1 class="text-5xl font-bold text-white md:text-7xl">Gallery</h1>
+		</div>
+	</section>
+
+	<!-- Image grid -->
+	<section class="bg-white">
+		<div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				{slots.map((slot) => (
+					<div class="flex aspect-[4/3] flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-silver bg-surface px-6 text-center">
+						<!-- Image icon -->
+						<svg class="h-10 w-10 text-silver" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 6h16.5A2.25 2.25 0 0122.5 8.25v7.5A2.25 2.25 0 0120.25 18H3.75A2.25 2.25 0 011.5 15.75V8.25A2.25 2.25 0 013.75 6z" />
+						</svg>
+						<!-- Save path -->
+						<div>
+							<p class="text-xs font-bold uppercase tracking-widest text-muted">Save your photo as</p>
+							<p class="mt-1 rounded bg-white px-3 py-1 font-mono text-xs font-semibold text-navy">
+								public/images/gallery/{slot.file}
+							</p>
+						</div>
+						<!-- Caption label -->
+						<p class="text-xs text-muted">{slot.caption}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<!-- Lightbox — rendered outside Layout, teleported to body in JS -->
+<div id="lightbox" aria-modal="true" role="dialog" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; background:rgba(0,0,0,0.92); align-items:center; justify-content:center;">
+
+	<!-- Counter top-left -->
+	<div style="position:absolute; top:20px; left:20px; color:rgba(255,255,255,0.7); font-size:14px; font-weight:500; font-family:Inter,sans-serif;">
+		<span id="lb-current">1</span>
+		<span style="color:rgba(255,255,255,0.3); margin:0 4px;">/</span>
+		<span id="lb-total">6</span>
+	</div>
+
+	<!-- Controls top-right: Play · Grid · Share · Close -->
+	<div style="position:absolute; top:14px; right:20px; display:flex; align-items:center; gap:8px;">
+
+		<!-- Play / Pause -->
+		<button id="lb-play" aria-label="Play slideshow" style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff; transition:background 150ms;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+			<svg id="lb-play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+			<svg id="lb-pause-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+		</button>
+
+		<!-- Grid view -->
+		<button id="lb-grid-btn" aria-label="Grid view" style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff; transition:background 150ms;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+		</button>
+
+		<!-- Share -->
+		<button id="lb-share" aria-label="Share" style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff; transition:background 150ms;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+		</button>
+
+		<!-- Close -->
+		<button id="lb-close" aria-label="Close" style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff; transition:background 150ms;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+		</button>
+	</div>
+
+	<!-- Prev arrow -->
+	<button id="lb-prev" aria-label="Previous image" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+		<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+	</button>
+
+	<!-- Single image view -->
+	<div id="lb-single" style="display:flex; flex-direction:column; align-items:center; max-width:85vw;">
+		<img id="lb-image" src="" alt="" style="max-height:75vh; max-width:85vw; border-radius:12px; object-fit:contain; box-shadow:0 25px 60px rgba(0,0,0,0.5);" />
+		<p id="lb-caption" style="margin-top:14px; color:rgba(255,255,255,0.65); font-size:13px; text-align:center; font-family:Inter,sans-serif;"></p>
+	</div>
+
+	<!-- Grid panel (hidden by default) -->
+	<div id="lb-grid-panel" style="display:none; width:100%; max-width:720px; padding:0 24px;">
+		<p style="text-align:center; color:rgba(255,255,255,0.55); font-size:13px; margin-bottom:16px; font-family:Inter,sans-serif;">Click any image to view</p>
+		<div id="lb-thumbs" style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;"></div>
+	</div>
+
+	<!-- Next arrow -->
+	<button id="lb-next" aria-label="Next image" style="position:absolute; right:16px; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+		<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+	</button>
+</div>
+
+<script>
+	// Teleport lightbox to body so fixed positioning is never broken by parent CSS
+	const lb = document.getElementById('lightbox') as HTMLElement;
+	if (lb && lb.parentElement !== document.body) {
+		document.body.appendChild(lb);
+	}
+
+	const items = [
+		{ src: '/images/gallery/work-01.jpg', caption: 'Web design project — Restaurant, Kirinyaga'    },
+		{ src: '/images/gallery/work-02.jpg', caption: 'Business software — SACCO management system'   },
+		{ src: '/images/gallery/work-03.jpg', caption: 'Brand identity project — hardware business'    },
+		{ src: '/images/gallery/work-04.jpg', caption: 'Server infrastructure — cloud migration'       },
+		{ src: '/images/gallery/work-05.jpg', caption: 'AI tools implementation — SME automation'      },
+		{ src: '/images/gallery/work-06.jpg', caption: 'Marketing materials — client rollout'          },
+	];
+
+	let current = 0;
+	let slideshowTimer: ReturnType<typeof setInterval> | null = null;
+	let gridOpen = false;
+
+	const lbSingle    = document.getElementById('lb-single') as HTMLElement;
+	const lbImage     = document.getElementById('lb-image') as HTMLImageElement;
+	const lbCaption   = document.getElementById('lb-caption') as HTMLElement;
+	const lbCurrent   = document.getElementById('lb-current') as HTMLElement;
+	const lbTotal     = document.getElementById('lb-total') as HTMLElement;
+	const lbGridPanel = document.getElementById('lb-grid-panel') as HTMLElement;
+	const lbThumbs    = document.getElementById('lb-thumbs') as HTMLElement;
+	const lbPrev      = document.getElementById('lb-prev') as HTMLButtonElement;
+	const lbNext      = document.getElementById('lb-next') as HTMLButtonElement;
+	const lbPlayIcon  = document.getElementById('lb-play-icon') as HTMLElement;
+	const lbPauseIcon = document.getElementById('lb-pause-icon') as HTMLElement;
+	const lbGridBtn   = document.getElementById('lb-grid-btn') as HTMLButtonElement;
+
+	lbTotal.textContent = String(items.length);
+
+	// Build thumbnail grid
+	items.forEach((item, i) => {
+		const img = document.createElement('img');
+		img.src = item.src;
+		img.alt = item.caption;
+		img.style.cssText = 'width:100%; aspect-ratio:1; object-fit:cover; border-radius:8px; cursor:pointer; opacity:0.7; transition:opacity 150ms, outline 150ms;';
+		img.addEventListener('mouseenter', () => { img.style.opacity = '1'; });
+		img.addEventListener('mouseleave', () => { img.style.opacity = current === i ? '1' : '0.7'; });
+		img.addEventListener('click', () => showSingle(i));
+		lbThumbs.appendChild(img);
+	});
+
+	function render() {
+		const item = items[current];
+		lbImage.src           = item.src;
+		lbImage.alt           = item.caption;
+		lbCaption.textContent = item.caption;
+		lbCurrent.textContent = String(current + 1);
+		// Highlight active thumb
+		Array.from(lbThumbs.children).forEach((el, i) => {
+			(el as HTMLElement).style.opacity = i === current ? '1' : '0.7';
+			(el as HTMLElement).style.outline = i === current ? '2px solid #fff' : 'none';
+			(el as HTMLElement).style.outlineOffset = '2px';
+		});
+	}
+
+	function openLightbox(index: number) {
+		current = index;
+		showSingle(index);
+		lb.style.display = 'flex';
+		document.body.style.overflow = 'hidden';
+	}
+
+	function closeLightbox() {
+		lb.style.display = 'none';
+		document.body.style.overflow = '';
+		stopSlideshow();
+		if (gridOpen) {
+			gridOpen = false;
+			lbGridPanel.style.display = 'none';
+			lbSingle.style.display = 'flex';
+			lbPrev.style.display = 'flex';
+			lbNext.style.display = 'flex';
+		}
+	}
+
+	function showSingle(index: number) {
+		current = index;
+		render();
+		gridOpen = false;
+		lbGridPanel.style.display = 'none';
+		lbSingle.style.display = 'flex';
+		lbPrev.style.display = 'flex';
+		lbNext.style.display = 'flex';
+		lbGridBtn.style.background = 'rgba(255,255,255,0.1)';
+	}
+
+	// ── Slideshow ─────────────────────────────────
+	function startSlideshow() {
+		lbPlayIcon.style.display = 'none';
+		lbPauseIcon.style.display = 'block';
+		slideshowTimer = setInterval(() => {
+			current = (current + 1) % items.length;
+			render();
+		}, 3000);
+	}
+
+	function stopSlideshow() {
+		if (slideshowTimer) { clearInterval(slideshowTimer); slideshowTimer = null; }
+		lbPlayIcon.style.display = 'block';
+		lbPauseIcon.style.display = 'none';
+	}
+
+	function nextImage() { stopSlideshow(); current = (current + 1) % items.length; render(); }
+	function prevImage() { stopSlideshow(); current = (current - 1 + items.length) % items.length; render(); }
+
+	// ── Grid view ─────────────────────────────────
+	lbGridBtn.addEventListener('click', () => {
+		if (gridOpen) {
+			showSingle(current);
+		} else {
+			gridOpen = true;
+			render();
+			lbSingle.style.display = 'none';
+			lbPrev.style.display = 'none';
+			lbNext.style.display = 'none';
+			lbGridPanel.style.display = 'block';
+			lbGridBtn.style.background = 'rgba(255,255,255,0.3)';
+		}
+	});
+
+	// ── Share ─────────────────────────────────────
+	document.getElementById('lb-share')?.addEventListener('click', async () => {
+		const item = items[current];
+		if (navigator.share) {
+			try { await navigator.share({ title: item.caption, url: window.location.href }); } catch {}
+		} else {
+			await navigator.clipboard.writeText(window.location.href);
+			const btn = document.getElementById('lb-share') as HTMLButtonElement;
+			const orig = btn.innerHTML;
+			btn.innerHTML = '<span style="font-size:10px;font-weight:700;font-family:Inter,sans-serif;color:#fff;">Copied!</span>';
+			setTimeout(() => { btn.innerHTML = orig; }, 1800);
+		}
+	});
+
+	// ── Events ────────────────────────────────────
+	document.getElementById('lb-close')?.addEventListener('click', closeLightbox);
+	document.getElementById('lb-prev')?.addEventListener('click', prevImage);
+	document.getElementById('lb-next')?.addEventListener('click', nextImage);
+	document.getElementById('lb-play')?.addEventListener('click', () => {
+		if (slideshowTimer) stopSlideshow(); else startSlideshow();
+	});
+
+	lb?.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+
+	document.addEventListener('keydown', (e) => {
+		if (lb.style.display === 'none') return;
+		if (e.key === 'ArrowLeft')  prevImage();
+		if (e.key === 'ArrowRight') nextImage();
+		if (e.key === 'Escape')     closeLightbox();
+	});
+
+	document.querySelectorAll<HTMLElement>('.gallery-item').forEach((el) => {
+		const overlay = el.querySelector<HTMLElement>('.gallery-overlay');
+		const img     = el.querySelector<HTMLElement>('.gallery-img');
+
+		el.addEventListener('mouseenter', () => {
+			if (overlay) overlay.style.opacity = '1';
+			if (img)     img.style.transform   = 'scale(1.05)';
+		});
+		el.addEventListener('mouseleave', () => {
+			if (overlay) overlay.style.opacity = '0';
+			if (img)     img.style.transform   = 'scale(1)';
+		});
+
+		el.addEventListener('click', () => openLightbox(Number(el.getAttribute('data-index'))));
+	});
+</script>

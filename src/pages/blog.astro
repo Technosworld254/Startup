@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { posts } from '../data/blog';
+
+const [featured, ...rest] = posts;
+---
+
+<Layout
+	title="Blog — Technosworld"
+	description="Practical insights for Kenyan SMEs on websites, software, and digital growth — from the Technosworld team in Kirinyaga County."
+>
+	<!-- Breadcrumb -->
+	<div class="border-b border-card-border bg-surface">
+		<div class="mx-auto flex max-w-7xl items-center gap-2 px-6 py-3 text-sm md:px-10">
+			<a href="/" class="text-muted transition-colors hover:text-navy">Home</a>
+			<span class="text-silver">/</span>
+			<span class="text-muted">Media</span>
+			<span class="text-silver">/</span>
+			<span class="font-medium text-navy">Blog</span>
+		</div>
+	</div>
+
+	<section class="bg-white">
+		<div class="mx-auto max-w-5xl px-6 py-16 md:px-10 md:py-20">
+
+			<!-- Page header — centered -->
+			<div class="mb-12 text-center md:mb-16">
+				<p class="eyebrow mb-4">Insights & updates</p>
+				<h1 class="text-4xl font-bold text-navy md:text-5xl">From the Technosworld team</h1>
+				<p class="mx-auto mt-4 max-w-xl text-charcoal">
+					Practical articles for businesses across Kirinyaga and Kenya — on websites, software, AI tools, and getting the most from technology.
+				</p>
+			</div>
+
+			<!-- Top card — full width, image on top -->
+			<article class="reveal group mb-6 overflow-hidden rounded-2xl border border-card-border bg-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+				<!-- Image — clean, no overlay -->
+				<div class="overflow-hidden">
+					<img
+						src={featured.image}
+						alt={featured.imageAlt}
+						class="aspect-[21/9] w-full object-cover transition-[filter] duration-300 group-hover:brightness-95 md:aspect-[21/9]"
+						style="aspect-ratio: 21/9"
+						loading="eager"
+					/>
+				</div>
+
+				<!-- Card body -->
+				<div class="p-6 md:p-8">
+					<span class="inline-block rounded-full bg-navy/[0.08] px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-navy-bright">
+						{featured.category}
+					</span>
+					<h2 class="mt-3 text-2xl font-bold leading-snug text-navy transition-colors group-hover:text-navy-bright md:text-3xl">
+						<a href={`/blog/${featured.slug}`} class="stretched-link">
+							{featured.title}
+						</a>
+					</h2>
+					<p class="mt-3 leading-relaxed text-charcoal">{featured.excerpt}</p>
+					<div class="mt-5 flex items-center justify-between border-t border-card-border pt-4">
+						<div class="flex items-center gap-2 text-xs text-muted">
+							<span>{featured.readTime}</span>
+							<span class="text-silver">·</span>
+							<span>{featured.date}</span>
+						</div>
+						<a
+							href={`/blog/${featured.slug}`}
+							class="inline-flex items-center gap-1.5 text-sm font-bold text-navy transition-colors hover:text-navy-bright"
+						>
+							Read article
+							<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+							</svg>
+						</a>
+					</div>
+				</div>
+			</article>
+
+			<!-- 2-column card grid -->
+			<div class="grid gap-6 sm:grid-cols-2">
+				{rest.map((post) => (
+					<article class="reveal group flex flex-col overflow-hidden rounded-xl border border-card-border bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-navy hover:shadow-md">
+						<!-- Image — clean, no overlay -->
+						<div class="overflow-hidden">
+							<img
+								src={post.image}
+								alt={post.imageAlt}
+								class="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+								loading="lazy"
+							/>
+						</div>
+
+						<!-- Card body -->
+						<div class="flex flex-1 flex-col p-5">
+							<span class="self-start rounded-full bg-navy/[0.08] px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-navy-bright">
+								{post.category}
+							</span>
+							<h2 class="mt-3 line-clamp-2 text-lg font-bold leading-snug text-navy transition-colors group-hover:text-navy-bright">
+								{post.title}
+							</h2>
+							<p class="mt-2 line-clamp-2 text-sm text-muted">{post.excerpt}</p>
+
+							<div class="mt-auto flex items-center justify-between border-t border-card-border pt-3 text-xs text-muted" style="margin-top: auto; padding-top: 0.75rem; margin-top: 1rem;">
+								<div class="flex items-center gap-2">
+									<span>{post.readTime}</span>
+									<span class="text-silver">·</span>
+									<span>{post.date}</span>
+								</div>
+								<a
+									href={`/blog/${post.slug}`}
+									class="inline-flex items-center gap-1 font-bold text-navy transition-colors hover:text-navy-bright"
+								>
+									Read
+									<svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+									</svg>
+								</a>
+							</div>
+						</div>
+					</article>
+				))}
+			</div>
+
+		</div>
+	</section>
+
+	<!-- Newsletter CTA -->
+	<section class="bg-surface">
+		<div class="mx-auto max-w-2xl px-6 py-16 text-center md:px-10">
+			<div class="reveal">
+				<p class="eyebrow mb-4">Stay informed</p>
+				<h2 class="text-2xl font-bold text-navy md:text-3xl">Get new articles by email</h2>
+				<p class="mt-4 text-charcoal">
+					Practical articles for Kenyan businesses, sent once or twice a month. No spam, ever.
+				</p>
+				<a
+					href="mailto:hello@technosworld.com?subject=Subscribe%20to%20Technosworld%20blog&body=Please%20add%20me%20to%20your%20mailing%20list."
+					class="btn-primary mt-8 inline-flex"
+				>
+					Subscribe via email
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>

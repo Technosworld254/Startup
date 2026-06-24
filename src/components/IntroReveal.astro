@@ -1,0 +1,57 @@
+---
+---
+
+<div id="intro-reveal" class="fixed inset-0 z-[100] flex items-center justify-center bg-navy">
+	<img
+		id="intro-logo"
+		src="/logo.jpg"
+		alt="Technosworld"
+		width="180"
+		height="180"
+		class="w-32 rounded-2xl shadow-xl md:w-44"
+	/>
+</div>
+
+<noscript>
+	<style>
+		#intro-reveal {
+			display: none;
+		}
+	</style>
+</noscript>
+
+<style>
+	@keyframes tw-pulse {
+		0%, 100% { transform: scale(1);    opacity: 1; }
+		50%       { transform: scale(1.05); opacity: 0.8; }
+	}
+	#intro-logo.pulsing {
+		animation: tw-pulse 1.4s ease-in-out infinite;
+	}
+</style>
+
+<script>
+	import gsap from 'gsap';
+
+	const overlay = document.getElementById('intro-reveal') as HTMLElement;
+	const logo    = document.getElementById('intro-logo') as HTMLElement;
+	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	if (overlay) {
+		if (!reduced) logo.classList.add('pulsing');
+
+		window.addEventListener('load', () => {
+			if (reduced) {
+				overlay.remove();
+				return;
+			}
+			logo.classList.remove('pulsing');
+			gsap.to(overlay, {
+				opacity: 0,
+				duration: 0.45,
+				ease: 'power1.inOut',
+				onComplete: () => overlay.remove(),
+			});
+		});
+	}
+</script>
