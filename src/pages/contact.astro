@@ -6,15 +6,6 @@ import Layout from '../layouts/Layout.astro';
 	title="Contact Technosworld — Get in touch"
 	description="Talk to the Technosworld team. Based in Kutus, Kirinyaga County. We reply within 24 hours."
 >
-	<!-- Breadcrumb -->
-	<div class="border-b border-card-border bg-surface">
-		<div class="mx-auto flex max-w-7xl items-center gap-2 px-6 py-3 text-sm md:px-10">
-			<a href="/" class="text-muted transition-colors hover:text-navy">Home</a>
-			<span class="text-silver">/</span>
-			<span class="font-medium text-navy">Contact</span>
-		</div>
-	</div>
-
 	<!-- Hero -->
 	<section class="bg-navy">
 		<div class="mx-auto max-w-4xl px-6 py-16 text-center md:px-10">
@@ -72,8 +63,8 @@ import Layout from '../layouts/Layout.astro';
 							</div>
 							<div>
 								<p class="text-sm font-bold text-navy">Email</p>
-								<a href="mailto:hello@technosworld.com" class="mt-1 block text-charcoal hover:text-navy-bright">
-									hello@technosworld.com
+								<a href="mailto:technosworld254@gmail.com" class="mt-1 block text-charcoal hover:text-navy-bright">
+									technosworld254@gmail.com
 								</a>
 							</div>
 						</div>
@@ -110,12 +101,12 @@ import Layout from '../layouts/Layout.astro';
 							<div>
 								<p class="text-sm font-bold text-navy">WhatsApp — Japhet</p>
 								<a
-									href="https://wa.me/254118241577"
+									href="https://wa.me/254114003304"
 									target="_blank"
 									rel="noopener noreferrer"
 									class="mt-1 block text-charcoal hover:text-navy-bright"
 								>
-									+254 118 241 577
+									0114003304
 								</a>
 							</div>
 						</div>
@@ -144,11 +135,13 @@ import Layout from '../layouts/Layout.astro';
 						<p class="mt-2 text-sm text-muted">We reply within 24 hours, usually much faster.</p>
 
 						<form
-							action="mailto:hello@technosworld.com"
+							action="https://api.web3forms.com/submit"
 							method="POST"
-							enctype="text/plain"
 							class="mt-6 space-y-5"
 						>
+							<input type="hidden" name="access_key" value="35fb60df-0b03-4e55-b8f8-bf8b306ba65f">
+							<input type="hidden" name="subject" value="New Contact Form Submission from Technosworld Website">
+							<input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 							<div class="grid gap-4 sm:grid-cols-2">
 								<div>
 									<label for="name" class="block text-sm font-medium text-charcoal">Full name <span class="text-navy-bright">*</span></label>

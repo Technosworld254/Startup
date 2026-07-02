@@ -19,8 +19,8 @@ import RibbonMotif from './RibbonMotif.astro';
 	<!-- Centered Foreground Text -->
 	<div class="reveal relative z-10 mx-auto max-w-4xl px-6 py-20 text-center md:px-10">
 		<p class="eyebrow mx-auto mb-4 bg-surface px-4 py-1.5 rounded-full inline-block border border-card-border">Websites · Software · AI · Digital Infrastructure</p>
-		<h1 class="text-4xl font-bold leading-tight text-black md:text-6xl">
-			Digital systems built for businesses across Kenya — and beyond.
+		<h1 class="text-4xl font-bold leading-tight text-black md:text-6xl min-h-[8rem] md:min-h-[7rem]">
+			<span id="hero-text-rotator">Digital systems built for<br/><span id="hero-rotating-word" class="text-navy-bright inline-block transition-all duration-500">businesses across Kenya.</span></span>
 		</h1>
 		<p class="mx-auto mt-6 max-w-2xl text-lg text-black">
 			Technosworld designs and builds websites, software, AI tools and digital
@@ -42,6 +42,33 @@ import RibbonMotif from './RibbonMotif.astro';
 	import * as THREE from 'three';
 
 	document.addEventListener('DOMContentLoaded', () => {
+		// Text rotator
+		const phrases = [
+			'restaurants across Kenya.',
+			'SACCOs in Central Kenya.',
+			'hospitals & clinics.',
+			'clubs & venues.',
+			'SMEs growing fast.',
+			'businesses across Kenya.',
+		];
+		const el = document.getElementById('hero-rotating-word') as HTMLElement | null;
+		if (el) {
+			let i = 0;
+			el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+			el.style.opacity = '1';
+			el.style.transform = 'translateY(0)';
+			setInterval(() => {
+				el.style.opacity = '0';
+				el.style.transform = 'translateY(-12px)';
+				setTimeout(() => {
+					i = (i + 1) % phrases.length;
+					el.textContent = phrases[i];
+					el.style.opacity = '1';
+					el.style.transform = 'translateY(0)';
+				}, 400);
+			}, 2800);
+		}
+
 		const canvas = document.getElementById('hero-3d-canvas') as HTMLCanvasElement;
 		if (!canvas || !canvas.parentElement) return;
 

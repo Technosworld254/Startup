@@ -24,20 +24,20 @@ const stats = [
 
 const story = [
 	{
-		tag: 'The problem',
-		title: 'A region full of unfinished websites',
+		tag: 'The Epidemic',
+		title: 'The Unfinished Web Epidemic',
 		description:
 			'Technosworld started in Kutus, Kirinyaga, with a simple observation: most small businesses across the region either had no website at all, or had paid for one that nobody maintained after launch.',
 	},
 	{
-		tag: 'The moment',
-		title: 'A restaurant owner, a dead website, and no one to call',
+		tag: 'The Catalyst',
+		title: 'Ghosted: When Developers Disappear',
 		description:
 			'A local restaurant owner told us their site had been offline for months — the developer who built it had moved on and stopped replying. That conversation became the reason Technosworld exists.',
 	},
 	{
-		tag: 'Why we built Technosworld',
-		title: 'Two engineers who show up and stay',
+		tag: 'Our Promise',
+		title: 'Engineers Who Actually Stick Around',
 		description:
 			'We\'re two developers with backgrounds in computer science and IT, and we built Technosworld to do what most agencies don\'t — show up, build something real, and stick around.',
 	},
@@ -46,13 +46,13 @@ const story = [
 const roadmap = [
 	{
 		tag: 'Today',
-		title: 'TechnosWeb & TechnosReach',
+		title: 'Digital Dominance: TechnosWeb & Reach',
 		description:
 			'Websites and digital tools for restaurants, hotels and SMEs across Kirinyaga and East Africa.',
 	},
 	{
 		tag: 'Building toward',
-		title: 'TechnosCore & TechnosMind',
+		title: 'The Future: AI & Core Systems',
 		description:
 			'Custom software and AI tools for the businesses we serve today — built for what they\'ll need tomorrow.',
 	},
@@ -70,8 +70,8 @@ const roadmap = [
 
 		<div class="reveal mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
 			{story.map((item) => (
-				<div class="card">
-					<p class="eyebrow mb-3">{item.tag}</p>
+				<div class="card group cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 focus:scale-105 focus:shadow-2xl focus:z-10 bg-white outline-none" tabindex="0">
+					<p class="eyebrow mb-3 transition-colors duration-300 group-hover:text-navy-bright">{item.tag}</p>
 					<h3 class="text-lg font-bold text-navy">{item.title}</h3>
 					<p class="mt-3 text-charcoal">{item.description}</p>
 				</div>
@@ -80,8 +80,8 @@ const roadmap = [
 
 		<div class="reveal mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
 			{roadmap.map((step) => (
-				<div class="card">
-					<p class="eyebrow mb-3">{step.tag}</p>
+				<div class="card group cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 focus:scale-105 focus:shadow-2xl focus:z-10 bg-white outline-none" tabindex="0">
+					<p class="eyebrow mb-3 transition-colors duration-300 group-hover:text-navy-bright">{step.tag}</p>
 					<h3 class="text-lg font-bold text-navy">{step.title}</h3>
 					<p class="mt-3 text-charcoal">{step.description}</p>
 				</div>

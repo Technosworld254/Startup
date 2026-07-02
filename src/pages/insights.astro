@@ -53,17 +53,6 @@ const articles = [
 	title="Insights — Technosworld"
 	description="Practical articles about digital transformation for Kenyan businesses. Websites, software, AI tools — written for business owners, not developers."
 >
-	<!-- Breadcrumb -->
-	<div class="border-b border-card-border bg-surface">
-		<div class="mx-auto flex max-w-7xl items-center gap-2 px-6 py-3 text-sm md:px-10">
-			<a href="/" class="text-muted transition-colors hover:text-navy">Home</a>
-			<span class="text-silver">/</span>
-			<span class="text-muted">Media</span>
-			<span class="text-silver">/</span>
-			<span class="font-medium text-navy">Insights</span>
-		</div>
-	</div>
-
 	<!-- Hero -->
 	<section class="bg-surface">
 		<div class="mx-auto max-w-4xl px-6 py-20 text-center md:px-10">
@@ -77,35 +66,67 @@ const articles = [
 		</div>
 	</section>
 
-	<!-- Articles -->
-	<section class="bg-white">
+	<!-- Articles Carousel -->
+	<section class="bg-white overflow-hidden">
 		<div class="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
-			<div class="flex flex-col gap-20">
-				{articles.map((article, i) => (
-					<article class={`reveal flex flex-col gap-10 md:flex-row md:gap-16 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
-						<!-- Label side -->
-						<div class="w-full md:w-1/3">
-							<p class="eyebrow mb-3">{article.category}</p>
-							<h2 class="text-2xl font-bold text-navy">{article.title}</h2>
-							<p class="mt-3 text-sm text-muted">{article.readTime}</p>
-							<a
-								href={`/services/${article.slug}`}
-								class="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-navy-bright hover:text-navy"
-							>
-								See our {article.category.toLowerCase()} work
-								<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-									<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-								</svg>
-							</a>
-						</div>
-						<!-- Content side -->
-						<div class="w-full space-y-4 md:w-2/3">
-							{article.content.map((para, pi) => (
-								<p class={`text-charcoal ${pi === 0 ? 'text-lg font-medium' : ''}`}>{para}</p>
-							))}
-						</div>
-					</article>
-				))}
+			<div id="insights-carousel" class="relative">
+				<!-- Slides -->
+				<div id="insights-track" class="relative">
+					{articles.map((article, i) => (
+						<article
+							id={`insight-slide-${i}`}
+							class={`insight-slide transition-all duration-700 ${i === 0 ? '' : 'hidden'}`}
+						>
+							<div class="flex flex-col gap-10 md:flex-row md:gap-16 items-center">
+								<!-- Label side -->
+								<div class="w-full md:w-1/3">
+									<p class="eyebrow mb-3">{article.category}</p>
+									<h2 class="text-2xl font-bold text-navy">{article.title}</h2>
+									<p class="mt-3 text-sm text-muted">{article.readTime}</p>
+									<a
+										href={`/services/${article.slug}`}
+										class="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-navy-bright hover:text-navy"
+									>
+										See our {article.category.toLowerCase()} work
+										<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+											<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+										</svg>
+									</a>
+								</div>
+								<!-- Content side -->
+								<div class="w-full space-y-4 md:w-2/3 bg-surface rounded-2xl p-8 border border-card-border">
+									<p class="text-xs font-bold uppercase tracking-widest text-navy-bright mb-4">{article.readTime}</p>
+									{article.content.map((para, pi) => (
+										<p class={`text-charcoal ${pi === 0 ? 'text-lg font-medium' : 'text-sm leading-relaxed'}`}>{para}</p>
+									))}
+								</div>
+							</div>
+						</article>
+					))}
+				</div>
+
+				<!-- Controls -->
+				<div class="mt-10 flex items-center justify-center gap-6">
+					<button id="insights-prev" aria-label="Previous article" class="flex h-10 w-10 items-center justify-center rounded-full border border-card-border text-navy transition-all hover:border-navy hover:bg-navy hover:text-white">
+						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+						</svg>
+					</button>
+					<div id="insights-dots" class="flex gap-2">
+						{articles.map((_, i) => (
+							<button
+								aria-label={`Go to article ${i + 1}`}
+								data-index={i}
+								class={`insights-dot h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'w-6 bg-navy' : 'w-2.5 bg-silver'}`}
+							></button>
+						))}
+					</div>
+					<button id="insights-next" aria-label="Next article" class="flex h-10 w-10 items-center justify-center rounded-full border border-card-border text-navy transition-all hover:border-navy hover:bg-navy hover:text-white">
+						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+						</svg>
+					</button>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -127,3 +148,36 @@ const articles = [
 		</div>
 	</section>
 </Layout>
+
+<script>
+	const slides = document.querySelectorAll<HTMLElement>('.insight-slide');
+	const dots = document.querySelectorAll<HTMLButtonElement>('.insights-dot');
+	const prev = document.getElementById('insights-prev');
+	const next = document.getElementById('insights-next');
+	let current = 0;
+	let autoTimer: ReturnType<typeof setInterval>;
+
+	function goTo(index: number) {
+		slides[current].classList.add('hidden');
+		dots[current].classList.remove('w-6', 'bg-navy');
+		dots[current].classList.add('w-2.5', 'bg-silver');
+
+		current = (index + slides.length) % slides.length;
+
+		slides[current].classList.remove('hidden');
+		dots[current].classList.add('w-6', 'bg-navy');
+		dots[current].classList.remove('w-2.5', 'bg-silver');
+	}
+
+	function startAuto() {
+		autoTimer = setInterval(() => goTo(current + 1), 7000);
+	}
+	function stopAuto() { clearInterval(autoTimer); }
+
+	prev?.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+	next?.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+	dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); }));
+
+	startAuto();
+</script>
+

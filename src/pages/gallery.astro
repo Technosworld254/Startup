@@ -2,12 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 
 const slots = [
-	{ file: 'work-01.jpg', caption: 'Web design project — Restaurant, Kirinyaga'    },
-	{ file: 'work-02.jpg', caption: 'Business software — SACCO management system'   },
-	{ file: 'work-03.jpg', caption: 'Brand identity project — hardware business'    },
-	{ file: 'work-04.jpg', caption: 'Server infrastructure — cloud migration'       },
-	{ file: 'work-05.jpg', caption: 'AI tools implementation — SME automation'      },
-	{ file: 'work-06.jpg', caption: 'Marketing materials — client rollout'          },
+	{ file: 'work-01.jpeg', caption: 'Poster 1' },
+	{ file: 'work-02.jpeg', caption: 'Poster 2' },
+	{ file: 'work-03.jpeg', caption: 'Poster 3' },
 ];
 ---
 
@@ -15,17 +12,6 @@ const slots = [
 	title="Gallery — Technosworld"
 	description="A look at the work behind Technosworld — based in Kutus, Kirinyaga County."
 >
-	<!-- Breadcrumb -->
-	<div class="border-b border-card-border bg-surface">
-		<div class="mx-auto flex max-w-7xl items-center gap-2 px-6 py-3 text-sm md:px-10">
-			<a href="/" class="text-muted transition-colors hover:text-navy">Home</a>
-			<span class="text-silver">/</span>
-			<span class="text-muted">Media</span>
-			<span class="text-silver">/</span>
-			<span class="font-medium text-navy">Gallery</span>
-		</div>
-	</div>
-
 	<!-- Hero -->
 	<section class="relative flex h-64 items-end overflow-hidden md:h-80">
 		<img
@@ -40,31 +26,23 @@ const slots = [
 		</div>
 	</section>
 
-	<!-- Image grid -->
-	<section class="bg-white">
-		<div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
-			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				{slots.map((slot) => (
-					<div class="flex aspect-[4/3] flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-silver bg-surface px-6 text-center">
-						<!-- Image icon -->
-						<svg class="h-10 w-10 text-silver" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 9.75h18M3.75 6h16.5A2.25 2.25 0 0122.5 8.25v7.5A2.25 2.25 0 0120.25 18H3.75A2.25 2.25 0 011.5 15.75V8.25A2.25 2.25 0 013.75 6z" />
-						</svg>
-						<!-- Save path -->
-						<div>
-							<p class="text-xs font-bold uppercase tracking-widest text-muted">Save your photo as</p>
-							<p class="mt-1 rounded bg-white px-3 py-1 font-mono text-xs font-semibold text-navy">
-								public/images/gallery/{slot.file}
-							</p>
-						</div>
-						<!-- Caption label -->
-						<p class="text-xs text-muted">{slot.caption}</p>
-					</div>
-				))}
+	<!-- Continuous Scrolling Carousel -->
+	<section class="bg-white py-16 overflow-hidden">
+		<div class="mx-auto max-w-7xl px-6 md:px-10 mb-10">
+			<p class="eyebrow mb-3 text-center">Our Work</p>
+			<h2 class="text-3xl font-bold text-navy text-center md:text-4xl">A look at what we've built</h2>
+			<p class="mt-4 text-center text-charcoal max-w-xl mx-auto">Hover to pause · Click any image to open full view</p>
+		</div>
+
+		<!-- Marquee track -->
+		<div id="gallery-marquee-wrap" class="relative" style="overflow:hidden; cursor:grab;">
+			<div id="gallery-marquee" class="flex gap-5" style="will-change:transform;">
+				<!-- Items injected by JS (original + clone for seamless loop) -->
 			</div>
 		</div>
 	</section>
 </Layout>
+
 
 <!-- Lightbox — rendered outside Layout, teleported to body in JS -->
 <div id="lightbox" aria-modal="true" role="dialog" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; background:rgba(0,0,0,0.92); align-items:center; justify-content:center;">
@@ -125,20 +103,101 @@ const slots = [
 </div>
 
 <script>
-	// Teleport lightbox to body so fixed positioning is never broken by parent CSS
-	const lb = document.getElementById('lightbox') as HTMLElement;
-	if (lb && lb.parentElement !== document.body) {
-		document.body.appendChild(lb);
+	// ── Data ──────────────────────────────────────────────────────────────
+	const items = [
+		{ src: '/images/gallery/work-01.jpeg', caption: 'Poster 1' },
+		{ src: '/images/gallery/work-02.jpeg', caption: 'Poster 2' },
+		{ src: '/images/gallery/work-03.jpeg', caption: 'Poster 3' },
+	];
+
+	// ── Marquee build ──────────────────────────────────────────────────────
+	const marquee = document.getElementById('gallery-marquee') as HTMLElement;
+
+	function makeCard(item: { src: string; caption: string }, index: number): HTMLElement {
+		const wrap = document.createElement('div');
+		wrap.style.cssText = `
+			position: relative;
+			flex-shrink: 0;
+			width: 420px;
+			height: 300px;
+			border-radius: 16px;
+			overflow: hidden;
+			box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+			cursor: pointer;
+		`;
+		wrap.dataset.index = String(index);
+
+		const img = document.createElement('img');
+		img.src = item.src;
+		img.alt = item.caption;
+		img.style.cssText = 'width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease, filter 0.4s ease; display:block;';
+
+		const overlay = document.createElement('div');
+		overlay.style.cssText = `
+			position:absolute; inset:0;
+			background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 55%);
+			opacity:0; transition:opacity 0.35s ease;
+			display:flex; align-items:flex-end; padding:20px;
+		`;
+		const label = document.createElement('span');
+		label.textContent = item.caption;
+		label.style.cssText = 'color:#fff; font-size:14px; font-weight:600; font-family:Inter,sans-serif; letter-spacing:0.02em;';
+		overlay.appendChild(label);
+
+		wrap.appendChild(img);
+		wrap.appendChild(overlay);
+
+		wrap.addEventListener('mouseenter', () => {
+			img.style.transform = 'scale(1.07)';
+			img.style.filter = 'brightness(0.88)';
+			overlay.style.opacity = '1';
+			paused = true;
+		});
+		wrap.addEventListener('mouseleave', () => {
+			img.style.transform = 'scale(1)';
+			img.style.filter = 'brightness(1)';
+			overlay.style.opacity = '0';
+			paused = false;
+		});
+		wrap.addEventListener('click', () => openLightbox(index % items.length));
+
+		return wrap;
 	}
 
-	const items = [
-		{ src: '/images/gallery/work-01.jpg', caption: 'Web design project — Restaurant, Kirinyaga'    },
-		{ src: '/images/gallery/work-02.jpg', caption: 'Business software — SACCO management system'   },
-		{ src: '/images/gallery/work-03.jpg', caption: 'Brand identity project — hardware business'    },
-		{ src: '/images/gallery/work-04.jpg', caption: 'Server infrastructure — cloud migration'       },
-		{ src: '/images/gallery/work-05.jpg', caption: 'AI tools implementation — SME automation'      },
-		{ src: '/images/gallery/work-06.jpg', caption: 'Marketing materials — client rollout'          },
-	];
+	// Build original + clone set for seamless looping
+	const allItems = [...items, ...items, ...items]; // triple for smooth large screens
+	allItems.forEach((item, i) => marquee.appendChild(makeCard(item, i)));
+
+	// ── Animation ──────────────────────────────────────────────────────────
+	let offset = 0;
+	let paused = false;
+	const speed = 0.6; // px per frame
+
+	function getFullWidth(): number {
+		// Width of one full set of original items (1/3 of total)
+		const totalWidth = marquee.scrollWidth;
+		return totalWidth / 3;
+	}
+
+	function tick() {
+		if (!paused) {
+			offset += speed;
+			const loopAt = getFullWidth();
+			if (offset >= loopAt) offset -= loopAt;
+			marquee.style.transform = `translateX(-${offset}px)`;
+		}
+		requestAnimationFrame(tick);
+	}
+	requestAnimationFrame(tick);
+
+	// Pause on wrap hover
+	const wrap = document.getElementById('gallery-marquee-wrap') as HTMLElement;
+	wrap.addEventListener('mouseenter', () => paused = true);
+	wrap.addEventListener('mouseleave', () => paused = false);
+
+	// ── Lightbox ────────────────────────────────────────────────────────────
+	const lb = document.getElementById('lightbox') as HTMLElement;
+	if (lb && lb.parentElement !== document.body) document.body.appendChild(lb);
 
 	let current = 0;
 	let slideshowTimer: ReturnType<typeof setInterval> | null = null;
@@ -159,25 +218,21 @@ const slots = [
 
 	lbTotal.textContent = String(items.length);
 
-	// Build thumbnail grid
 	items.forEach((item, i) => {
 		const img = document.createElement('img');
-		img.src = item.src;
-		img.alt = item.caption;
-		img.style.cssText = 'width:100%; aspect-ratio:1; object-fit:cover; border-radius:8px; cursor:pointer; opacity:0.7; transition:opacity 150ms, outline 150ms;';
-		img.addEventListener('mouseenter', () => { img.style.opacity = '1'; });
-		img.addEventListener('mouseleave', () => { img.style.opacity = current === i ? '1' : '0.7'; });
+		img.src = item.src; img.alt = item.caption;
+		img.style.cssText = 'width:100%; aspect-ratio:1; object-fit:cover; border-radius:8px; cursor:pointer; opacity:0.7; transition:opacity 150ms;';
+		img.addEventListener('mouseenter', () => img.style.opacity = '1');
+		img.addEventListener('mouseleave', () => img.style.opacity = current === i ? '1' : '0.7');
 		img.addEventListener('click', () => showSingle(i));
 		lbThumbs.appendChild(img);
 	});
 
 	function render() {
 		const item = items[current];
-		lbImage.src           = item.src;
-		lbImage.alt           = item.caption;
+		lbImage.src = item.src; lbImage.alt = item.caption;
 		lbCaption.textContent = item.caption;
 		lbCurrent.textContent = String(current + 1);
-		// Highlight active thumb
 		Array.from(lbThumbs.children).forEach((el, i) => {
 			(el as HTMLElement).style.opacity = i === current ? '1' : '0.7';
 			(el as HTMLElement).style.outline = i === current ? '2px solid #fff' : 'none';
@@ -186,114 +241,54 @@ const slots = [
 	}
 
 	function openLightbox(index: number) {
-		current = index;
-		showSingle(index);
+		current = index; showSingle(index);
 		lb.style.display = 'flex';
 		document.body.style.overflow = 'hidden';
+		paused = true;
 	}
-
 	function closeLightbox() {
 		lb.style.display = 'none';
 		document.body.style.overflow = '';
 		stopSlideshow();
-		if (gridOpen) {
-			gridOpen = false;
-			lbGridPanel.style.display = 'none';
-			lbSingle.style.display = 'flex';
-			lbPrev.style.display = 'flex';
-			lbNext.style.display = 'flex';
-		}
+		paused = false;
+		if (gridOpen) { gridOpen = false; lbGridPanel.style.display = 'none'; lbSingle.style.display = 'flex'; lbPrev.style.display = 'flex'; lbNext.style.display = 'flex'; }
 	}
-
 	function showSingle(index: number) {
-		current = index;
-		render();
-		gridOpen = false;
-		lbGridPanel.style.display = 'none';
-		lbSingle.style.display = 'flex';
-		lbPrev.style.display = 'flex';
-		lbNext.style.display = 'flex';
+		current = index; render(); gridOpen = false;
+		lbGridPanel.style.display = 'none'; lbSingle.style.display = 'flex';
+		lbPrev.style.display = 'flex'; lbNext.style.display = 'flex';
 		lbGridBtn.style.background = 'rgba(255,255,255,0.1)';
 	}
-
-	// ── Slideshow ─────────────────────────────────
 	function startSlideshow() {
-		lbPlayIcon.style.display = 'none';
-		lbPauseIcon.style.display = 'block';
-		slideshowTimer = setInterval(() => {
-			current = (current + 1) % items.length;
-			render();
-		}, 3000);
+		lbPlayIcon.style.display = 'none'; lbPauseIcon.style.display = 'block';
+		slideshowTimer = setInterval(() => { current = (current + 1) % items.length; render(); }, 3000);
 	}
-
 	function stopSlideshow() {
 		if (slideshowTimer) { clearInterval(slideshowTimer); slideshowTimer = null; }
-		lbPlayIcon.style.display = 'block';
-		lbPauseIcon.style.display = 'none';
+		lbPlayIcon.style.display = 'block'; lbPauseIcon.style.display = 'none';
 	}
-
 	function nextImage() { stopSlideshow(); current = (current + 1) % items.length; render(); }
 	function prevImage() { stopSlideshow(); current = (current - 1 + items.length) % items.length; render(); }
 
-	// ── Grid view ─────────────────────────────────
 	lbGridBtn.addEventListener('click', () => {
-		if (gridOpen) {
-			showSingle(current);
-		} else {
-			gridOpen = true;
-			render();
-			lbSingle.style.display = 'none';
-			lbPrev.style.display = 'none';
-			lbNext.style.display = 'none';
-			lbGridPanel.style.display = 'block';
-			lbGridBtn.style.background = 'rgba(255,255,255,0.3)';
-		}
+		if (gridOpen) { showSingle(current); }
+		else { gridOpen = true; render(); lbSingle.style.display = 'none'; lbPrev.style.display = 'none'; lbNext.style.display = 'none'; lbGridPanel.style.display = 'block'; lbGridBtn.style.background = 'rgba(255,255,255,0.3)'; }
 	});
-
-	// ── Share ─────────────────────────────────────
 	document.getElementById('lb-share')?.addEventListener('click', async () => {
-		const item = items[current];
-		if (navigator.share) {
-			try { await navigator.share({ title: item.caption, url: window.location.href }); } catch {}
-		} else {
-			await navigator.clipboard.writeText(window.location.href);
-			const btn = document.getElementById('lb-share') as HTMLButtonElement;
-			const orig = btn.innerHTML;
-			btn.innerHTML = '<span style="font-size:10px;font-weight:700;font-family:Inter,sans-serif;color:#fff;">Copied!</span>';
-			setTimeout(() => { btn.innerHTML = orig; }, 1800);
-		}
+		if (navigator.share) { try { await navigator.share({ title: items[current].caption, url: window.location.href }); } catch {} }
+		else { await navigator.clipboard.writeText(window.location.href); const btn = document.getElementById('lb-share') as HTMLButtonElement; const orig = btn.innerHTML; btn.innerHTML = '<span style="font-size:10px;font-weight:700;font-family:Inter,sans-serif;color:#fff;">Copied!</span>'; setTimeout(() => btn.innerHTML = orig, 1800); }
 	});
-
-	// ── Events ────────────────────────────────────
 	document.getElementById('lb-close')?.addEventListener('click', closeLightbox);
 	document.getElementById('lb-prev')?.addEventListener('click', prevImage);
 	document.getElementById('lb-next')?.addEventListener('click', nextImage);
-	document.getElementById('lb-play')?.addEventListener('click', () => {
-		if (slideshowTimer) stopSlideshow(); else startSlideshow();
-	});
-
+	document.getElementById('lb-play')?.addEventListener('click', () => { if (slideshowTimer) stopSlideshow(); else startSlideshow(); });
 	lb?.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
-
 	document.addEventListener('keydown', (e) => {
 		if (lb.style.display === 'none') return;
-		if (e.key === 'ArrowLeft')  prevImage();
+		if (e.key === 'ArrowLeft') prevImage();
 		if (e.key === 'ArrowRight') nextImage();
-		if (e.key === 'Escape')     closeLightbox();
-	});
-
-	document.querySelectorAll<HTMLElement>('.gallery-item').forEach((el) => {
-		const overlay = el.querySelector<HTMLElement>('.gallery-overlay');
-		const img     = el.querySelector<HTMLElement>('.gallery-img');
-
-		el.addEventListener('mouseenter', () => {
-			if (overlay) overlay.style.opacity = '1';
-			if (img)     img.style.transform   = 'scale(1.05)';
-		});
-		el.addEventListener('mouseleave', () => {
-			if (overlay) overlay.style.opacity = '0';
-			if (img)     img.style.transform   = 'scale(1)';
-		});
-
-		el.addEventListener('click', () => openLightbox(Number(el.getAttribute('data-index'))));
+		if (e.key === 'Escape') closeLightbox();
 	});
 </script>
+
+

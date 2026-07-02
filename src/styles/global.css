@@ -28,7 +28,13 @@
     @apply inline-flex items-center justify-center rounded-[7px] px-[28px] py-[13px] text-[15px] font-medium transition-transform duration-150 active:scale-[0.98] border border-navy text-navy hover:bg-navy hover:text-white;
   }
   .card {
-    @apply rounded-xl border border-card-border bg-white p-8 transition-all duration-200 hover:-translate-y-[3px] hover:border-2 hover:border-navy;
+    @apply relative overflow-hidden rounded-xl border border-card-border bg-white p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-navy cursor-pointer focus:scale-105 outline-none;
+  }
+  .card:hover h2, .card:hover h3, .card:hover h4, .card:focus h2, .card:focus h3, .card:focus h4 {
+    @apply text-navy-bright transition-colors duration-300;
+  }
+  .card:hover p.eyebrow, .card:focus p.eyebrow {
+    @apply text-navy transition-colors duration-300;
   }
   .eyebrow {
     @apply text-xs font-bold uppercase tracking-[0.2em] text-navy-bright;
