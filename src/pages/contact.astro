@@ -138,98 +138,147 @@ import Layout from '../layouts/Layout.astro';
 							action="https://api.web3forms.com/submit"
 							method="POST"
 							class="mt-6 space-y-5"
+							id="contact-form"
 						>
 							<input type="hidden" name="access_key" value="35fb60df-0b03-4e55-b8f8-bf8b306ba65f">
 							<input type="hidden" name="subject" value="New Contact Form Submission from Technosworld Website">
 							<input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-							<div class="grid gap-4 sm:grid-cols-2">
-								<div>
-									<label for="name" class="block text-sm font-medium text-charcoal">Full name <span class="text-navy-bright">*</span></label>
-									<input
-										type="text"
-										id="name"
-										name="name"
-										required
-										placeholder="Your name"
-										class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
-									/>
-								</div>
-								<div>
-									<label for="email" class="block text-sm font-medium text-charcoal">Email address <span class="text-navy-bright">*</span></label>
-									<input
-										type="email"
-										id="email"
-										name="email"
-										required
-										placeholder="you@example.com"
-										class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
-									/>
-								</div>
+
+							<div id="form-success" class="hidden rounded-lg bg-green-50 p-4 text-green-800 text-sm">
+								Message sent successfully! Click "Go Back" to return to the form.
 							</div>
 
-							<div class="grid gap-4 sm:grid-cols-2">
-								<div>
-									<label for="phone" class="block text-sm font-medium text-charcoal">Phone / WhatsApp <span class="text-muted text-xs">(optional)</span></label>
-									<input
-										type="tel"
-										id="phone"
-										name="phone"
-										placeholder="+254 7XX XXX XXX"
-										class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
-									/>
+							<div id="form-fields">
+								<div class="grid gap-4 sm:grid-cols-2">
+									<div>
+										<label for="name" class="block text-sm font-medium text-charcoal">Full name <span class="text-navy-bright">*</span></label>
+										<input
+											type="text"
+											id="name"
+											name="name"
+											required
+											placeholder="Your name"
+											class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
+										/>
+									</div>
+									<div>
+										<label for="email" class="block text-sm font-medium text-charcoal">Email address <span class="text-navy-bright">*</span></label>
+										<input
+											type="email"
+											id="email"
+											name="email"
+											required
+											placeholder="you@example.com"
+											class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
+										/>
+									</div>
 								</div>
-								<div>
-									<label for="company" class="block text-sm font-medium text-charcoal">Business / organisation</label>
-									<input
-										type="text"
-										id="company"
-										name="company"
-										placeholder="Your business name"
-										class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
-									/>
-								</div>
-							</div>
 
-							<div>
-								<label for="service" class="block text-sm font-medium text-charcoal">Service you're interested in</label>
-								<select
-									id="service"
-									name="service"
-									class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
+								<div class="grid gap-4 sm:grid-cols-2">
+									<div>
+										<label for="phone" class="block text-sm font-medium text-charcoal">Phone / WhatsApp <span class="text-muted text-xs">(optional)</span></label>
+										<input
+											type="tel"
+											id="phone"
+											name="phone"
+											placeholder="+254 7XX XXX XXX"
+											class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
+										/>
+									</div>
+									<div>
+										<label for="company" class="block text-sm font-medium text-charcoal">Business / organisation</label>
+										<input
+											type="text"
+											id="company"
+											name="company"
+											placeholder="Your business name"
+											class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
+										/>
+									</div>
+								</div>
+
+								<div>
+									<label for="service" class="block text-sm font-medium text-charcoal">Service you're interested in</label>
+									<select
+										id="service"
+										name="service"
+										class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
+									>
+										<option value="">Select a service</option>
+										<option value="Website">Website & online presence</option>
+										<option value="Software">Business & management software</option>
+										<option value="AI tools">AI tools & automation</option>
+										<option value="Infrastructure">Digital infrastructure</option>
+										<option value="Branding">Branding, print & marketing</option>
+										<option value="Not sure">Not sure yet — need advice</option>
+									</select>
+								</div>
+
+								<div>
+									<label for="message" class="block text-sm font-medium text-charcoal">Tell us about your business <span class="text-navy-bright">*</span></label>
+									<textarea
+										id="message"
+										name="message"
+										required
+										rows="5"
+										placeholder="What does your business do? What problem are you trying to solve? What have you tried before?"
+										class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
+									></textarea>
+								</div>
+
+								<button
+									type="submit"
+									class="btn-primary w-full justify-center"
 								>
-									<option value="">Select a service</option>
-									<option value="Website">Website & online presence</option>
-									<option value="Software">Business & management software</option>
-									<option value="AI tools">AI tools & automation</option>
-									<option value="Infrastructure">Digital infrastructure</option>
-									<option value="Branding">Branding, print & marketing</option>
-									<option value="Not sure">Not sure yet — need advice</option>
-								</select>
-							</div>
-
-							<div>
-								<label for="message" class="block text-sm font-medium text-charcoal">Tell us about your business <span class="text-navy-bright">*</span></label>
-								<textarea
-									id="message"
-									name="message"
-									required
-									rows="5"
-									placeholder="What does your business do? What problem are you trying to solve? What have you tried before?"
-									class="mt-1.5 w-full rounded-lg border border-card-border bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
-								></textarea>
+									Send message
+								</button>
 							</div>
 
 							<button
-								type="submit"
-								class="btn-primary w-full justify-center"
+								type="button"
+								id="go-back-btn"
+								class="hidden w-full justify-center rounded-lg border border-card-border bg-white px-6 py-3 text-sm font-medium text-charcoal hover:bg-surface"
 							>
-								Send message
+								Go Back
 							</button>
 
 							<p class="text-center text-xs text-muted">
 								Your details are only used to respond to your enquiry. No spam, ever.
 							</p>
 						</form>
+
+						<script>
+							document.addEventListener('DOMContentLoaded', function() {
+								const form = document.getElementById('contact-form');
+								const formFields = document.getElementById('form-fields');
+								const formSuccess = document.getElementById('form-success');
+								const goBackBtn = document.getElementById('go-back-btn');
+
+								form.addEventListener('submit', function(e) {
+									e.preventDefault();
+									const formData = new FormData(form);
+									fetch('https://api.web3forms.com/submit', {
+										method: 'POST',
+										body: formData
+									}).then(response => {
+										if (response.ok) {
+											formFields.classList.add('hidden');
+											formSuccess.classList.remove('hidden');
+											goBackBtn.classList.remove('hidden');
+										}
+									}).catch(() => {
+										form.submit();
+									});
+								});
+
+								goBackBtn.addEventListener('click', function() {
+									form.reset();
+									formFields.classList.remove('hidden');
+									formSuccess.classList.add('hidden');
+									goBackBtn.classList.add('hidden');
+								});
+							});
+						</script>
 					</div>
 				</div>
 
